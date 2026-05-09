@@ -19,11 +19,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/account', require('./routes/accountRoutes'));
 app.use('/api/transaction', require('./routes/transactionRoutes'));
+app.use(express.static(path.join(__dirname, "frontend/dist")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "frontend/dist/index.html"));
+});
 
 // Welcome Route
 app.get('/', (req, res) => {
     res.json({ message: 'Welcome to Bank Management System API' });
 });
+const path = require("path");
 
 // Error handling middleware
 app.use((err, req, res, next) => {
